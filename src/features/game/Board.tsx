@@ -1,7 +1,15 @@
 import { useState } from "react";
 import "./board.css";
 
-function Square({ element }: { element: SquareElement }) {
+function Square({
+  element,
+  move,
+  setMove,
+}: {
+  element: SquareElement;
+  move: number;
+  setMove: () => void;
+}) {
   const [isSelected, setSelected] = useState(element.isSelected);
   const [isCross, setCross] = useState(true);
 
@@ -11,7 +19,8 @@ function Square({ element }: { element: SquareElement }) {
     }
 
     setSelected(true);
-    setCross(element.index % 2 === 0);
+    setCross(move % 2 === 0);
+    setMove();
   }
 
   const sign: string = isCross ? "X" : "O";
@@ -30,6 +39,12 @@ interface SquareElement {
 }
 
 export default function Board() {
+  const [move, setMove] = useState(0);
+
+  function handleClick(): void {
+    setMove(move + 1);
+  }
+
   const squares: SquareElement[] = [];
   for (let i = 0; i < 9; i++) {
     squares.push({
@@ -40,7 +55,12 @@ export default function Board() {
   }
 
   const board = squares.map((square: SquareElement) => (
-    <Square key={square.index} element={square} />
+    <Square
+      key={square.index}
+      element={square}
+      move={move}
+      setMove={handleClick}
+    />
   ));
 
   return (
