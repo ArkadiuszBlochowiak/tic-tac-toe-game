@@ -9,6 +9,13 @@ With [npm](https://npmjs.org/) installed, run
 $ npm install
 ```
 
+## Run
+
+```
+$ npm run dev
+```
+
+
 ## Tech Stack
 
 The following tools were used in the construction of the project:
