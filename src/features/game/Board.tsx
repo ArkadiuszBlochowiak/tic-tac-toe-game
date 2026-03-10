@@ -2,31 +2,24 @@ import { useState } from "react";
 import "./board.css";
 
 function Square({
-  element,
-  move,
+  isSelected,
+  isCross,
   setMove,
 }: {
-  element: SquareElement;
-  move: number;
+  isSelected: boolean;
+  isCross: boolean;
   setMove: () => void;
 }) {
-  const [isSelected, setSelected] = useState(element.isSelected);
-  const [isCross, setCross] = useState(true);
-
-  function handleSelection(): void {
-    if (isSelected) {
-      return;
-    }
-
-    setSelected(true);
-    setCross(move % 2 === 0);
-    setMove();
-  }
-
   const sign: string = isCross ? "X" : "O";
 
+  function handleClick(): void {
+    if (!isSelected) {
+      setMove();
+    }
+  }
+
   return (
-    <div className="square" onClick={handleSelection}>
+    <div className="square" onClick={handleClick}>
       {isSelected ? sign : ""}
     </div>
   );
@@ -39,27 +32,35 @@ interface SquareElement {
 }
 
 export default function Board() {
-  const [move, setMove] = useState(0);
-
-  function handleClick(): void {
-    setMove(move + 1);
-  }
-
-  const squares: SquareElement[] = [];
+  const list: SquareElement[] = [];
   for (let i = 0; i < 9; i++) {
-    squares.push({
+    list.push({
       index: i,
       isSelected: false,
       isCross: false,
     });
   }
 
+  const [move, setMove] = useState(1);
+  const [isCross, setCross] = useState(true);
+  const [squares, setSquares] = useState<SquareElement[]>(list);
+
+  function handleClick(index: number): void {
+    setMove(move + 1);
+    setCross(move % 2 === 0);
+
+    const list = squares.slice();
+    list[index].isSelected = true;
+    list[index].isCross = isCross;
+    setSquares(list);
+  }
+
   const board = squares.map((square: SquareElement) => (
     <Square
       key={square.index}
-      element={square}
-      move={move}
-      setMove={handleClick}
+      isSelected={square.isSelected}
+      isCross={square.isCross}
+      setMove={() => handleClick(square.index)}
     />
   ));
 
