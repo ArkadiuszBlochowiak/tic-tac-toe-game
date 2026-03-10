@@ -1,0 +1,11 @@
+.header {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 16px;
+    border-bottom: #888888 solid 1px;
+}
+
+.header__logo {
+    align-self: center;
+    justify-self: flex-start;
+}
