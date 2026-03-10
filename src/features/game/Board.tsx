@@ -61,8 +61,17 @@ function Status({
   isCross: boolean;
 }) {
   const winner = calculateWinner(squares);
+  const allSelected = squares.every((square) => Boolean(square.value));
   const sign: string = isCross ? "X" : "O";
-  const status = winner ? `The winner is ${winner}` : `Next move ${sign}`;
+
+  let status = "";
+  if (winner) {
+    status = `The winner is ${winner}`;
+  } else if (allSelected) {
+    status = "It's a draw!";
+  } else {
+    status = `Next move ${sign}`;
+  }
 
   return <span>{status}</span>;
 }
@@ -78,14 +87,13 @@ export default function Board() {
 
   const [move, setMove] = useState(1);
   const [isCross, setCross] = useState(true);
-  // could be refactored to useReducer
   const [squares, setSquares] = useState<SquareElement[]>(list);
 
   function handleClick(index: number): void {
-    if (squares[index].value || calculateWinner(squares)) return;
+    if (calculateWinner(squares)) return;
 
     setMove(move + 1);
-    setCross(move % 2 === 0);
+    setCross(!isCross);
 
     const list = squares.slice();
     list[index].value = isCross ? "X" : "O";
