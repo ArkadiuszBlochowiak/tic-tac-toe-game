@@ -2,33 +2,69 @@ import { useState } from "react";
 import "./board.css";
 
 function Square({
-  isSelected,
-  isCross,
+  value,
   setMove,
 }: {
-  isSelected: boolean;
-  isCross: boolean;
+  value: string | null;
   setMove: () => void;
 }) {
-  const sign: string = isCross ? "X" : "O";
-
   function handleClick(): void {
-    if (!isSelected) {
-      setMove();
-    }
+    if (value) return;
+
+    setMove();
   }
 
   return (
     <div className="square" onClick={handleClick}>
-      {isSelected ? sign : ""}
+      {value}
     </div>
   );
 }
 
 interface SquareElement {
   index: number;
-  isSelected: boolean;
+  value: string | null;
+}
+
+function calculateWinner(list: SquareElement[]): string {
+  const squares: SquareElement[] = list.slice();
+
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+
+  for (const indices of lines) {
+    const [a, b, c] = indices;
+    if (
+      squares[a].value &&
+      squares[a].value === squares[b].value &&
+      squares[b].value === squares[c].value
+    ) {
+      return squares[a].value;
+    }
+  }
+  return "";
+}
+
+function Status({
+  squares,
+  isCross,
+}: {
+  squares: SquareElement[];
   isCross: boolean;
+}) {
+  const winner = calculateWinner(squares);
+  const sign: string = isCross ? "X" : "O";
+  const status = winner ? `The winner is ${winner}` : `Next move ${sign}`;
+
+  return <span>{status}</span>;
 }
 
 export default function Board() {
@@ -36,36 +72,37 @@ export default function Board() {
   for (let i = 0; i < 9; i++) {
     list.push({
       index: i,
-      isSelected: false,
-      isCross: false,
+      value: null,
     });
   }
 
   const [move, setMove] = useState(1);
   const [isCross, setCross] = useState(true);
+  // could be refactored to useReducer
   const [squares, setSquares] = useState<SquareElement[]>(list);
 
   function handleClick(index: number): void {
+    if (squares[index].value || calculateWinner(squares)) return;
+
     setMove(move + 1);
     setCross(move % 2 === 0);
 
     const list = squares.slice();
-    list[index].isSelected = true;
-    list[index].isCross = isCross;
+    list[index].value = isCross ? "X" : "O";
     setSquares(list);
   }
 
   const board = squares.map((square: SquareElement) => (
     <Square
       key={square.index}
-      isSelected={square.isSelected}
-      isCross={square.isCross}
+      value={square.value}
       setMove={() => handleClick(square.index)}
     />
   ));
 
   return (
     <>
+      <Status squares={squares} isCross={isCross} />
       <div className="board">{board}</div>
     </>
   );
