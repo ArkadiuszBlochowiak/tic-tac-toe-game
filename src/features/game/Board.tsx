@@ -65,7 +65,6 @@ export default function Board() {
 
   return (
     <>
-      start
       <div className="board">{board}</div>
     </>
   );
