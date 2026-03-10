@@ -1,25 +1,42 @@
+.board {
+    width: fit-content;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr)
+}
+
 .square {
+    --square-size: 50px;
+    --border-radius: 10px;
+
+    height: var(--square-size);
+    aspect-ratio: 1;
+    padding: 0;
+    outline: 1px solid #999;
+    font-size: calc(var(--square-size) - 24px);
+    line-height: var(--square-size);
+    font-weight: bold;
+    text-align: center;
     background: #fff;
     color: #000;
-    border: 1px solid #999;
-    float: left;
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 34px;
-    height: 34px;
-    margin-right: -1px;
-    margin-top: -1px;
-    padding: 0;
-    text-align: center;
-    width: 34px;
+
+    &:nth-child(1) {
+        border-top-left-radius: var(--border-radius);
+    }
+
+    &:nth-child(3) {
+        border-top-right-radius: var(--border-radius);
+    }
+
+    &:nth-child(7) {
+        border-bottom-left-radius: var(--border-radius);
+    }
+
+    &:nth-child(9) {
+        border-bottom-right-radius: var(--border-radius);
+    }
 }
 
-.board-row:after {
-    clear: both;
-    content: '';
-    display: table;
-}
-
+/* unused */
 .status {
     margin-bottom: 10px;
 }
@@ -27,13 +44,6 @@
     display: flex;
     flex-direction: row;
 }
-
 .game-info {
     margin-left: 20px;
-}
-
-.board {
-    width: fit-content;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr)
 }
