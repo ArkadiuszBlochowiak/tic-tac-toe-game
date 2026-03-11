@@ -83,7 +83,7 @@ export default function Board({
   function handleClick(index: number): void {
     if (calculateWinner(squares)) return;
 
-    const list = squares.slice();
+    const list = structuredClone(squares);
     list[index].value = isCross ? "X" : "O";
     onUpdate(list);
   }
