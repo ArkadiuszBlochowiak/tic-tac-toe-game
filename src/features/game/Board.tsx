@@ -1,5 +1,5 @@
-import { useState } from "react";
 import "./board.css";
+import type { SquareElement } from "./types/game.ts";
 
 function Square({
   value,
@@ -19,11 +19,6 @@ function Square({
       {value}
     </div>
   );
-}
-
-interface SquareElement {
-  index: number;
-  value: string | null;
 }
 
 function calculateWinner(list: SquareElement[]): string {
@@ -76,28 +71,21 @@ function Status({
   return <span>{status}</span>;
 }
 
-export default function Board() {
-  const list: SquareElement[] = [];
-  for (let i = 0; i < 9; i++) {
-    list.push({
-      index: i,
-      value: null,
-    });
-  }
-
-  const [move, setMove] = useState(1);
-  const [isCross, setCross] = useState(true);
-  const [squares, setSquares] = useState<SquareElement[]>(list);
-
+export default function Board({
+  squares,
+  isCross,
+  onUpdate,
+}: {
+  squares: SquareElement[];
+  isCross: boolean;
+  onUpdate: (squares: SquareElement[]) => void;
+}) {
   function handleClick(index: number): void {
     if (calculateWinner(squares)) return;
 
-    setMove(move + 1);
-    setCross(!isCross);
-
     const list = squares.slice();
     list[index].value = isCross ? "X" : "O";
-    setSquares(list);
+    onUpdate(list);
   }
 
   const board = squares.map((square: SquareElement) => (
