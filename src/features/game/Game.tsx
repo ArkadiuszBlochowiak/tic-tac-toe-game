@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./game.css";
 import Board from "./Board.tsx";
 import type { SquareElement } from "./types/game.ts";
+import Moves from "./Moves.tsx";
 
 export default function Game() {
   const list: SquareElement[] = [];
@@ -28,6 +29,7 @@ export default function Game() {
         isCross={isCross}
         onUpdate={handleClick}
       />
+      <Moves moves={history} />
     </div>
   );
 }
