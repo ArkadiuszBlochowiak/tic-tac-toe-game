@@ -1,12 +1,14 @@
 import "./board.css";
-import type { SquareElement } from "./types/game.ts";
+import type { SquareElement, WinnerSequence } from "./types/game.ts";
 
 function Square({
   value,
   setMove,
+  highlight,
 }: {
   value: string | null;
   setMove: () => void;
+  highlight: boolean;
 }) {
   function handleClick(): void {
     if (value) return;
@@ -14,14 +16,17 @@ function Square({
     setMove();
   }
 
+  const classNames = ["square"];
+  if (highlight) classNames.push("highlight");
+
   return (
-    <div className="square" onClick={handleClick}>
+    <div className={classNames.join(" ")} onClick={handleClick}>
       {value}
     </div>
   );
 }
 
-function calculateWinner(list: SquareElement[]): string {
+function calculateWinner(list: SquareElement[]): WinnerSequence | null {
   const squares: SquareElement[] = list.slice();
 
   const lines = [
@@ -42,10 +47,10 @@ function calculateWinner(list: SquareElement[]): string {
       squares[a].value === squares[b].value &&
       squares[b].value === squares[c].value
     ) {
-      return squares[a].value;
+      return { type: squares[a].value, sequence: indices };
     }
   }
-  return "";
+  return null;
 }
 
 function Status({
@@ -61,7 +66,7 @@ function Status({
 
   let status = "";
   if (winner) {
-    status = `The winner is ${winner}`;
+    status = `The winner is ${winner.type}`;
   } else if (allSelected) {
     status = "It's a draw!";
   } else {
@@ -80,8 +85,10 @@ export default function Board({
   isCross: boolean;
   onUpdate: (squares: SquareElement[]) => void;
 }) {
+  const isWinner = calculateWinner(squares);
+
   function handleClick(index: number): void {
-    if (calculateWinner(squares)) return;
+    if (isWinner) return;
 
     const list = structuredClone(squares);
     list[index].value = isCross ? "X" : "O";
@@ -93,6 +100,7 @@ export default function Board({
       key={square.index}
       value={square.value}
       setMove={() => handleClick(square.index)}
+      highlight={isWinner?.sequence.includes(square.index) ?? false}
     />
   ));
 

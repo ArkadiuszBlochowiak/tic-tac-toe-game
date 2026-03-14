@@ -34,6 +34,10 @@
     &:nth-child(9) {
         border-bottom-right-radius: var(--border-radius);
     }
+
+    &.highlight {
+        background: #0f0;
+    }
 }
 
 /* unused */
