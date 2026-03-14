@@ -1,5 +1,5 @@
-import type { SquareElement } from "./types/game.ts";
-import "./moves.css";
+import type { SquareElement } from "../types/game.ts";
+import "../styles/moves.css";
 
 export default function Moves({
   moves,

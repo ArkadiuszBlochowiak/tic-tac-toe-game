@@ -1,5 +1,5 @@
-import "./board.css";
-import type { SquareElement, WinnerSequence } from "./types/game.ts";
+import "../styles/board.css";
+import type { SquareElement, WinnerSequence } from "../types/game.ts";
 
 function Square({
   value,

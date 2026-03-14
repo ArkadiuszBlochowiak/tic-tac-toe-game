@@ -1,7 +1,7 @@
 import { useState } from "react";
-import "./game.css";
+import "../styles/game.css";
 import Board from "./Board.tsx";
-import type { SquareElement } from "./types/game.ts";
+import type { SquareElement } from "../types/game.ts";
 import Moves from "./Moves.tsx";
 
 export default function Game() {
