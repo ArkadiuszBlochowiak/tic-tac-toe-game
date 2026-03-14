@@ -15,21 +15,25 @@ export default function Game() {
 
   const [isCross, setCross] = useState(true);
   const [history, setHistory] = useState<SquareElement[][]>([list]);
-  const currentSquares = history[history.length - 1];
+  const [currentMove, setCurrentMove] = useState(0);
+  const currentStep = history[currentMove];
 
-  function handleClick(squares: SquareElement[]): void {
+  function handleMove(squares: SquareElement[]): void {
+    const newHistory = [...history.splice(0, currentMove + 1), squares];
     setCross(!isCross);
-    setHistory([...history, squares]);
+    setHistory(newHistory);
+    setCurrentMove(newHistory.length - 1);
+  }
+
+  function handleCurrentStep(step: number): void {
+    setCurrentMove(step);
+    setCross(step % 2 === 0);
   }
 
   return (
     <div className="game">
-      <Board
-        squares={currentSquares}
-        isCross={isCross}
-        onUpdate={handleClick}
-      />
-      <Moves moves={history} />
+      <Board squares={currentStep} isCross={isCross} onUpdate={handleMove} />
+      <Moves moves={history} onUpdate={handleCurrentStep} />
     </div>
   );
 }
