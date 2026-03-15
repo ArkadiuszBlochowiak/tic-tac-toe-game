@@ -3,10 +3,12 @@ import "../styles/game.css";
 import Board from "./Board.tsx";
 import type { SquareElement } from "../types/game.ts";
 import Moves from "./Moves.tsx";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { doesGameEnded } from "../utils/gameHelpers.ts";
 import { useParams } from "react-router";
 import { useGameStore } from "../../../stores/gameStore.ts";
+import { useShallow } from "zustand/react/shallow";
+import { v4 as uuid } from "uuid";
 
 function GameActions({
   squares,
@@ -37,8 +39,14 @@ function GameActions({
 export default function Game() {
   const params = useParams();
   const id: string = params.id ?? "";
-  const games = useGameStore((state) => state.games);
-  const updateGame = useGameStore((state) => state.update);
+  const { games, updateGame, addGame } = useGameStore(
+    useShallow((state) => ({
+      games: state.games,
+      updateGame: state.update,
+      addGame: state.append,
+    })),
+  );
+  const navigate = useNavigate();
 
   const list: SquareElement[] = [];
   for (let i = 0; i < 9; i++) {
@@ -68,10 +76,15 @@ export default function Game() {
     setCross(step % 2 === 0);
   }
 
-  function handleReset(): void {
+  async function handleReset(): Promise<void> {
+    const id = uuid();
+
+    addGame(id);
     setCurrentMove(0);
-    setHistory([list]);
+    setHistory(games.get(id) ?? [list]);
     setCross(true);
+
+    await navigate(`/game/${id}`);
   }
 
   return (
