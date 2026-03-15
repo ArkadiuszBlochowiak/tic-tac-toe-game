@@ -6,6 +6,12 @@
 }
 
 .header__logo {
+    display: flex;
     align-self: center;
     justify-self: flex-start;
+
+    .logo {
+        height: 64px;
+        aspect-ratio: 1;
+    }
 }
