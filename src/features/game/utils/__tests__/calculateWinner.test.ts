@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { calculateWinner } from "../gameHelpers.ts";
-import type { SquareElement, WinnerSequence } from "../../types/game.ts";
+import type { SquareElement, WinnerSequence } from "../../types/winner.ts";
 
 describe("calculateWinner", () => {
   it("should return X as winner", () => {

@@ -1,4 +1,5 @@
-import type { SquareElement, WinnerSequence } from "../types/game.ts";
+import type { WinnerSequence } from "../types/winner.ts";
+import type { SquareElement } from "../../../types/game";
 
 export function calculateWinner(list: SquareElement[]): WinnerSequence | null {
   const squares: SquareElement[] = list.slice();

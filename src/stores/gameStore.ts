@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { SquareElement } from "../features/game/types/game.ts";
+import type { SquareElement } from "../types/game";
 import { getEmptyList } from "../utils/generateList.ts";
 
 interface GameState {

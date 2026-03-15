@@ -1,4 +1,4 @@
-import type { SquareElement } from "../features/game/types/game.ts";
+import type { SquareElement } from "../types/game";
 
 export function getEmptyList(): SquareElement[][] {
   const list: SquareElement[] = [];

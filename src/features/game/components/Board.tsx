@@ -1,5 +1,5 @@
 import "../styles/board.css";
-import type { SquareElement } from "../types/game.ts";
+import type { SquareElement } from "../../../types/game";
 import { calculateWinner, getSign } from "../utils/gameHelpers.ts";
 
 function Square({

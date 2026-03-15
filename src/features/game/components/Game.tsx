@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../styles/game.css";
 import Board from "./Board.tsx";
-import type { SquareElement } from "../types/game.ts";
+import type { SquareElement } from "../../../types/game";
 import Moves from "./Moves.tsx";
 import { Link, useNavigate } from "react-router";
 import { doesGameEnded } from "../utils/gameHelpers.ts";
