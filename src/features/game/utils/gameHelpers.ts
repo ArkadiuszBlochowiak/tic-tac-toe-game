@@ -32,3 +32,7 @@ export function doesGameEnded(list: SquareElement[]): boolean {
 
   return Boolean(calculateWinner(list)) || allSelected;
 }
+
+export function getSign(isCross: boolean) {
+  return isCross ? "X" : "O";
+}

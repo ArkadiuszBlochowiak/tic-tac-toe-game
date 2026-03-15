@@ -1,6 +1,6 @@
 import "../styles/board.css";
 import type { SquareElement } from "../types/game.ts";
-import { calculateWinner } from "../utils/calculateWinner.ts";
+import { calculateWinner, getSign } from "../utils/gameHelpers.ts";
 
 function Square({
   value,
@@ -36,7 +36,7 @@ function Status({
 }) {
   const winner = calculateWinner(squares);
   const allSelected = squares.every((square) => Boolean(square.value));
-  const sign: string = isCross ? "X" : "O";
+  const sign: string = getSign(isCross);
 
   let status = "";
   if (winner) {
@@ -65,7 +65,7 @@ export default function Board({
     if (isWinner) return;
 
     const list = structuredClone(squares);
-    list[index].value = isCross ? "X" : "O";
+    list[index].value = getSign(isCross);
     onUpdate(list);
   }
 

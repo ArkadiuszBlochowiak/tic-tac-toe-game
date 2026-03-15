@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { calculateWinner } from "../calculateWinner.ts";
+import { calculateWinner } from "../gameHelpers.ts";
 import type { SquareElement, WinnerSequence } from "../../types/game.ts";
 
 describe("calculateWinner", () => {

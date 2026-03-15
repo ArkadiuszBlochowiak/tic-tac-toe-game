@@ -4,9 +4,9 @@ import Board from "./Board.tsx";
 import type { SquareElement } from "../types/game.ts";
 import Moves from "./Moves.tsx";
 import { Link } from "react-router";
-import { doesGameEnded } from "../utils/calculateWinner.ts";
+import { doesGameEnded } from "../utils/gameHelpers.ts";
 
-function AfterGameActions({
+function GameActions({
   squares,
   resetState,
 }: {
@@ -68,7 +68,7 @@ export default function Game() {
         <Moves moves={history} onUpdate={handleCurrentStep} />
       </div>
       <div className="game-actions">
-        <AfterGameActions squares={currentStep} resetState={handleReset} />
+        <GameActions squares={currentStep} resetState={handleReset} />
       </div>
     </>
   );
