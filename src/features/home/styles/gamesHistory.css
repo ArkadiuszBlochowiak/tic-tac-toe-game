@@ -1,0 +1,11 @@
+.games-history {
+    text-align: left;
+}
+
+.games-history__item {
+    display: inline-flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: 8px;
+}

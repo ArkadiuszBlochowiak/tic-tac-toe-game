@@ -54,7 +54,7 @@ export default function Game() {
   const game = games.get(id) ?? list;
   const [isCross, setCross] = useState(true);
   const [history, setHistory] = useState<SquareElement[][]>(game);
-  const [currentMove, setCurrentMove] = useState(0);
+  const [currentMove, setCurrentMove] = useState(game.length - 1);
   const currentStep = history[currentMove];
 
   function handleMove(squares: SquareElement[]): void {
