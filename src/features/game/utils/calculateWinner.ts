@@ -26,3 +26,9 @@ export function calculateWinner(list: SquareElement[]): WinnerSequence | null {
   }
   return null;
 }
+
+export function doesGameEnded(list: SquareElement[]): boolean {
+  const allSelected = list.every((square) => Boolean(square.value));
+
+  return Boolean(calculateWinner(list)) || allSelected;
+}

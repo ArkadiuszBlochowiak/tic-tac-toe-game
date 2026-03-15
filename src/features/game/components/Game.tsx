@@ -4,7 +4,7 @@ import Board from "./Board.tsx";
 import type { SquareElement } from "../types/game.ts";
 import Moves from "./Moves.tsx";
 import { Link } from "react-router";
-import { calculateWinner } from "../utils/calculateWinner.ts";
+import { doesGameEnded } from "../utils/calculateWinner.ts";
 
 function AfterGameActions({
   squares,
@@ -13,8 +13,7 @@ function AfterGameActions({
   squares: SquareElement[];
   resetState: () => void;
 }) {
-  const allSelected = squares.every((square) => Boolean(square.value));
-  const shouldShowActions = Boolean(calculateWinner(squares)) || allSelected;
+  const shouldShowActions = doesGameEnded(squares);
 
   const actions = (
     <div className="actions">
