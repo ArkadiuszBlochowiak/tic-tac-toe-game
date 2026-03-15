@@ -79,9 +79,9 @@ export default function Board({
   ));
 
   return (
-    <>
+    <div className="board-container">
       <Status squares={squares} isCross={isCross} />
       <div className="board">{board}</div>
-    </>
+    </div>
   );
 }

@@ -14,7 +14,7 @@ export default function Moves({
     </li>
   ));
 
-  return <ol className="moves">{list}</ol>;
+  return <ol className="moves-list">{list}</ol>;
 }
 
 function List({ step, changeStep }: { step: number; changeStep: () => void }) {
