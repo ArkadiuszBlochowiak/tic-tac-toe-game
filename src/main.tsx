@@ -25,7 +25,7 @@ const router = createBrowserRouter([
         Component: Home,
       },
       {
-        path: "/game",
+        path: "game/:id",
         Component: Game,
       },
     ],

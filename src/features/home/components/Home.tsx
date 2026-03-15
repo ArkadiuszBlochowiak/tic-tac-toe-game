@@ -1,8 +1,21 @@
-import { Link } from "react-router";
 import { useState } from "react";
+import { useGameStore } from "../../../stores/gameStore.ts";
+import { v4 as uuid } from "uuid";
+import { useNavigate } from "react-router";
 
 export default function Home() {
   const [count, setCount] = useState(0);
+  const games = useGameStore((state) => state.games);
+  const addGame = useGameStore((state) => state.append);
+  const navigate = useNavigate();
+
+  console.log(games);
+
+  const startGame = async () => {
+    const id = uuid();
+    addGame(id);
+    await navigate(`/game/${id}`);
+  };
 
   return (
     <>
@@ -16,9 +29,9 @@ export default function Home() {
         </p>
       </div>
       <div className="card">
-        <Link to="/game">
-          <button type="button">Play game</button>
-        </Link>
+        <button type="button" onClick={startGame}>
+          Play game
+        </button>
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
