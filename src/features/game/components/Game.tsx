@@ -16,17 +16,20 @@ function GameActions({
   const shouldShowActions = doesGameEnded(squares);
 
   const actions = (
-    <div className="actions">
-      <button type="button" onClick={resetState}>
-        Play again
-      </button>
-      <Link to="/">
-        <button type="button">Return to home page</button>
-      </Link>
+    <div>
+      <hr />
+      <div className="game-actions__buttons">
+        <button type="button" onClick={resetState}>
+          Play again
+        </button>
+        <Link to="/">
+          <button type="button">Return to home page</button>
+        </Link>
+      </div>
     </div>
   );
 
-  return <div>{shouldShowActions && actions}</div>;
+  return shouldShowActions && actions;
 }
 
 export default function Game() {
@@ -67,9 +70,7 @@ export default function Game() {
         <Board squares={currentStep} isCross={isCross} onUpdate={handleMove} />
         <Moves moves={history} onUpdate={handleCurrentStep} />
       </div>
-      <div className="game-actions">
-        <GameActions squares={currentStep} resetState={handleReset} />
-      </div>
+      <GameActions squares={currentStep} resetState={handleReset} />
     </>
   );
 }

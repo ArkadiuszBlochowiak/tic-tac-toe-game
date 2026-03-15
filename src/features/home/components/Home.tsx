@@ -17,7 +17,7 @@ export default function Home() {
       </div>
       <div className="card">
         <Link to="/game">
-          <button type="button">Go to tic tac toe game</button>
+          <button type="button">Play game</button>
         </Link>
       </div>
       <p className="read-the-docs">
