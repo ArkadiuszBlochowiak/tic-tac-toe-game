@@ -1,21 +1,11 @@
 import { create } from "zustand";
 import type { SquareElement } from "../features/game/types/game.ts";
+import { getEmptyList } from "../utils/generateList.ts";
 
 interface GameState {
   games: Map<string, SquareElement[][]>;
   update: (id: string, moves: SquareElement[][]) => void;
   append: (id: string) => void;
-}
-
-function getEmptyList(): SquareElement[][] {
-  const list: SquareElement[] = [];
-  for (let i = 0; i < 9; i++) {
-    list.push({
-      index: i,
-      value: null,
-    });
-  }
-  return [list];
 }
 
 export const useGameStore = create<GameState>((set) => ({

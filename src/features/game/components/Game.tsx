@@ -9,6 +9,7 @@ import { useParams } from "react-router";
 import { useGameStore } from "../../../stores/gameStore.ts";
 import { useShallow } from "zustand/react/shallow";
 import { v4 as uuid } from "uuid";
+import { getEmptyList } from "../../../utils/generateList.ts";
 
 function GameActions({
   squares,
@@ -39,6 +40,7 @@ function GameActions({
 export default function Game() {
   const params = useParams();
   const id: string = params.id ?? "";
+
   const { games, updateGame, addGame } = useGameStore(
     useShallow((state) => ({
       games: state.games,
@@ -47,17 +49,9 @@ export default function Game() {
     })),
   );
   const navigate = useNavigate();
+  const list = getEmptyList();
 
-  const list: SquareElement[] = [];
-  for (let i = 0; i < 9; i++) {
-    list.push({
-      index: i,
-      value: null,
-    });
-  }
-
-  const game = games.get(id) ?? [list];
-
+  const game = games.get(id) ?? list;
   const [isCross, setCross] = useState(true);
   const [history, setHistory] = useState<SquareElement[][]>(game);
   const [currentMove, setCurrentMove] = useState(0);
@@ -81,7 +75,7 @@ export default function Game() {
 
     addGame(id);
     setCurrentMove(0);
-    setHistory(games.get(id) ?? [list]);
+    setHistory(games.get(id) ?? list);
     setCross(true);
 
     await navigate(`/game/${id}`);
