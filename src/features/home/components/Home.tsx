@@ -16,7 +16,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="card">
+      <div className="play-button">
         <button type="button" onClick={startGame}>
           Play game
         </button>

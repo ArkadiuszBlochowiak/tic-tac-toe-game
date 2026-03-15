@@ -1,3 +1,9 @@
-.card {
+.play-button {
     padding-block: 64px;
+
+    button {
+        width: 144px;
+        aspect-ratio: 2 / 1;
+        font-size: 20px;
+    }
 }

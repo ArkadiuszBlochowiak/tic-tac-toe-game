@@ -4,8 +4,9 @@ import { Link } from "react-router";
 
 export function GamesHistory() {
   const games = useGameStore((state) => state.games);
+  const ids = Array.from(games.keys());
 
-  const list = Array.from(games.keys()).map((id) => {
+  const list = ids.map((id) => {
     return (
       <li key={id}>
         <div className="games-history__item">
@@ -20,8 +21,8 @@ export function GamesHistory() {
 
   return (
     <div className="games-history">
-      <span>Games history:</span>
-      <ul>{list}</ul>
+      <p>Games history:</p>
+      {ids.length ? <ul>{list}</ul> : <span>No games played yet</span>}
     </div>
   );
 }
